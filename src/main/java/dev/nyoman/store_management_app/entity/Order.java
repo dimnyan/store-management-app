@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -20,5 +21,11 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetail;
     private Long subtotal;
-    private LocalDate date;
+    private LocalDateTime date;
+
+
+    @PrePersist
+    protected void prePersist() {
+        this.date = LocalDateTime.now();
+    }
 }
